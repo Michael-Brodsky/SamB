@@ -9,6 +9,7 @@ Public Class FrmMeasurements
 #Region "Private Members"
     Private mBlades As Integer
     Private mHardware As WorkstationEncoders
+    Public context As HaleMRIContext
 #End Region
 #Region "Public Interface"
     Public Sub New()
@@ -19,7 +20,7 @@ Public Class FrmMeasurements
     Public Sub New(ByRef wse As WorkstationEncoders)
         ' This call is required by the designer.
         InitializeComponent()
-        Dim db As New HaleMRIContext()
+        context = New HaleMRIContext
         mHardware = wse
         ' Add any initialization after the InitializeComponent() call.
     End Sub
@@ -34,7 +35,6 @@ Public Class FrmMeasurements
 #End Region
 #Region "Private Interface"
     Private Function CurrentBlade() As Integer
-        Dim db As HaleMRIContext
         Dim blades As Integer
         Return Math.Truncate(mHardware.Encoders.Angle / (360 / 4)) + 1
         'Replace 4 with number of blades from Database
@@ -73,6 +73,10 @@ Public Class FrmMeasurements
         mHardware.Encoders.ResetCount(0)
         mHardware.Encoders.ResetCount(1)
         mHardware.Encoders.ResetCount(2)
+    End Sub
+
+    Private Sub cmdStartScan_Click(sender As Object, e As EventArgs) Handles cmdStartScan.Click
+
     End Sub
 #End Region
 End Class

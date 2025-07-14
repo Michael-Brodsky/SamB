@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HPrYMPBeq/M=",
+  "dgSpecHash": "YoRRbyxsSQQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\LibDatabase.vbproj",
+  "projectFilePath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\LibDatabase.vbproj",
   "expectedPackageFiles": [
     "C:\\Users\\82002\\.nuget\\packages\\entityframeworkcore.jet\\8.0.0\\entityframeworkcore.jet.8.0.0.nupkg.sha512",
     "C:\\Users\\82002\\.nuget\\packages\\entityframeworkcore.jet.data\\8.0.0\\entityframeworkcore.jet.data.8.0.0.nupkg.sha512",

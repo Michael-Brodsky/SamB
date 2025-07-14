@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("LibEncoder"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65eb0ef7801342a39405531bead27661d7ab51da"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a94c5b90597b306c8ae8965bcd1649f51840562b"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("LibEncoder"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("LibEncoder"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 

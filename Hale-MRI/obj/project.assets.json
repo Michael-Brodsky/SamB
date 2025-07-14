@@ -3109,11 +3109,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\Hale-MRI\\Hale-MRI.vbproj",
+      "projectUniqueName": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\Hale-MRI\\Hale-MRI.vbproj",
       "projectName": "Hale-MRI",
-      "projectPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\Hale-MRI\\Hale-MRI.vbproj",
+      "projectPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\Hale-MRI\\Hale-MRI.vbproj",
       "packagesPath": "C:\\Users\\82002\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\Hale-MRI\\obj\\",
+      "outputPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\Hale-MRI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3135,11 +3135,11 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\LibDatabase.vbproj": {
-              "projectPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\LibDatabase.vbproj"
+            "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\LibDatabase.vbproj": {
+              "projectPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\LibDatabase.vbproj"
             },
-            "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibEncoder\\LibEncoder.vbproj": {
-              "projectPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibEncoder\\LibEncoder.vbproj"
+            "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibEncoder\\LibEncoder.vbproj": {
+              "projectPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibEncoder\\LibEncoder.vbproj"
             }
           }
         }

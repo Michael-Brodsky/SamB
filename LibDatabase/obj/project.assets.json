@@ -3011,11 +3011,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\LibDatabase.vbproj",
+      "projectUniqueName": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\LibDatabase.vbproj",
       "projectName": "LibDatabase",
-      "projectPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\LibDatabase.vbproj",
+      "projectPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\LibDatabase.vbproj",
       "packagesPath": "C:\\Users\\82002\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\82002\\source\\repos\\Hale-MRI\\Hale-MRI\\LibDatabase\\obj\\",
+      "outputPath": "C:\\Users\\82002\\source\\repos\\SamBRemote\\SamB\\LibDatabase\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

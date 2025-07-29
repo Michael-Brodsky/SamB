@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FrmMeasurements
-    Inherits System.Windows.Forms.Form
+    Inherits FrmDatabaseForm
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -39,14 +39,13 @@ Partial Class FrmMeasurements
         txtDepth = New TextBox()
         labRadius = New Label()
         txtRadius = New TextBox()
+        RadiusMeasurementBindingSource = New BindingSource(components)
         labRadiusPercent = New Label()
         txtRadiusPercent = New TextBox()
         labWheelPitch = New Label()
         txtWheelPitch = New TextBox()
-        cmdStopScan = New Button()
         cmdSetTip = New Button()
         cmdHome = New Button()
-        cmdStartScan = New Button()
         cmdZero = New Button()
         StatusStrip1 = New StatusStrip()
         WorkstationLabel = New ToolStripStatusLabel()
@@ -56,11 +55,7 @@ Partial Class FrmMeasurements
         ResetDepthToolStripMenuItem = New ToolStripMenuItem()
         ResetRadiusToolStripMenuItem = New ToolStripMenuItem()
         StatusLabel = New ToolStripStatusLabel()
-        txtBlade = New TextBox()
-        CountUpdate = New Timer(components)
         GridBladebyRadius = New DataGridView()
-        BladeIdDataGridViewTextBoxColumn = New DataGridViewTextBoxColumn()
-        RadiusMeasurementBindingSource = New BindingSource(components)
         tloMeasurements = New TableLayoutPanel()
         gBoxPlotGraph = New GroupBox()
         tloPlotGraph = New TableLayoutPanel()
@@ -128,9 +123,15 @@ Partial Class FrmMeasurements
         Tlo = New TableLayoutPanel()
         RadSysImperical = New RadioButton()
         RadSysMetric = New RadioButton()
+        ComboBladeId = New ComboBox()
+        chkMeasurements = New CheckBox()
+        CellMeasurementsBindingSource = New BindingSource(components)
+        ExtremeMeasurementsBindingSource = New BindingSource(components)
+        timerMeasurements = New Timer(components)
+        BladeID = New DataGridViewTextBoxColumn()
+        CType(RadiusMeasurementBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
         CType(GridBladebyRadius, ComponentModel.ISupportInitialize).BeginInit()
-        CType(RadiusMeasurementBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         tloMeasurements.SuspendLayout()
         gBoxPlotGraph.SuspendLayout()
         tloPlotGraph.SuspendLayout()
@@ -143,6 +144,8 @@ Partial Class FrmMeasurements
         TloLocalPitchDetails.SuspendLayout()
         GrpSystem.SuspendLayout()
         Tlo.SuspendLayout()
+        CType(CellMeasurementsBindingSource, ComponentModel.ISupportInitialize).BeginInit()
+        CType(ExtremeMeasurementsBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' labBlade
@@ -219,6 +222,10 @@ Partial Class FrmMeasurements
         txtRadius.Size = New Size(203, 23)
         txtRadius.TabIndex = 6
         ' 
+        ' RadiusMeasurementBindingSource
+        ' 
+        RadiusMeasurementBindingSource.DataSource = GetType(LibDatabase.Models.RadiusMeasurement)
+        ' 
         ' labRadiusPercent
         ' 
         labRadiusPercent.AutoSize = True
@@ -263,16 +270,6 @@ Partial Class FrmMeasurements
         txtWheelPitch.Size = New Size(203, 23)
         txtWheelPitch.TabIndex = 12
         ' 
-        ' cmdStopScan
-        ' 
-        cmdStopScan.Location = New Point(278, 191)
-        cmdStopScan.Margin = New Padding(2, 1, 2, 1)
-        cmdStopScan.Name = "cmdStopScan"
-        cmdStopScan.Size = New Size(65, 23)
-        cmdStopScan.TabIndex = 14
-        cmdStopScan.Text = "Stop Scan"
-        cmdStopScan.UseVisualStyleBackColor = True
-        ' 
         ' cmdSetTip
         ' 
         cmdSetTip.Location = New Point(485, 191)
@@ -292,16 +289,6 @@ Partial Class FrmMeasurements
         cmdHome.TabIndex = 16
         cmdHome.Text = "Home"
         cmdHome.UseVisualStyleBackColor = True
-        ' 
-        ' cmdStartScan
-        ' 
-        cmdStartScan.Location = New Point(209, 191)
-        cmdStartScan.Margin = New Padding(2, 1, 2, 1)
-        cmdStartScan.Name = "cmdStartScan"
-        cmdStartScan.Size = New Size(65, 23)
-        cmdStartScan.TabIndex = 17
-        cmdStartScan.Text = "Start Scan"
-        cmdStartScan.UseVisualStyleBackColor = True
         ' 
         ' cmdZero
         ' 
@@ -373,27 +360,11 @@ Partial Class FrmMeasurements
         StatusLabel.Text = "Status"
         StatusLabel.ToolTipText = "Encoder Status"
         ' 
-        ' txtBlade
-        ' 
-        txtBlade.Dock = DockStyle.Top
-        txtBlade.Location = New Point(138, 39)
-        txtBlade.Margin = New Padding(0, 1, 2, 1)
-        txtBlade.Name = "txtBlade"
-        txtBlade.Size = New Size(67, 23)
-        txtBlade.TabIndex = 20
-        ' 
-        ' CountUpdate
-        ' 
-        CountUpdate.Enabled = True
-        CountUpdate.Interval = 25
-        ' 
         ' GridBladebyRadius
         ' 
-        GridBladebyRadius.AutoGenerateColumns = False
         GridBladebyRadius.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        GridBladebyRadius.Columns.AddRange(New DataGridViewColumn() {BladeIdDataGridViewTextBoxColumn})
+        GridBladebyRadius.Columns.AddRange(New DataGridViewColumn() {BladeID})
         tloMeasurements.SetColumnSpan(GridBladebyRadius, 9)
-        GridBladebyRadius.DataSource = RadiusMeasurementBindingSource
         GridBladebyRadius.Dock = DockStyle.Fill
         GridBladebyRadius.Location = New Point(0, 228)
         GridBladebyRadius.Margin = New Padding(0)
@@ -404,18 +375,6 @@ Partial Class FrmMeasurements
         GridBladebyRadius.SelectionMode = DataGridViewSelectionMode.CellSelect
         GridBladebyRadius.Size = New Size(621, 152)
         GridBladebyRadius.TabIndex = 21
-        ' 
-        ' BladeIdDataGridViewTextBoxColumn
-        ' 
-        BladeIdDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
-        BladeIdDataGridViewTextBoxColumn.DataPropertyName = "BladeId"
-        BladeIdDataGridViewTextBoxColumn.HeaderText = "BladeId"
-        BladeIdDataGridViewTextBoxColumn.Name = "BladeIdDataGridViewTextBoxColumn"
-        BladeIdDataGridViewTextBoxColumn.Width = 71
-        ' 
-        ' RadiusMeasurementBindingSource
-        ' 
-        RadiusMeasurementBindingSource.DataSource = GetType(LibDatabase.Models.RadiusMeasurement)
         ' 
         ' tloMeasurements
         ' 
@@ -438,7 +397,6 @@ Partial Class FrmMeasurements
         tloMeasurements.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 6.25F))
         tloMeasurements.Controls.Add(labAngle, 0, 0)
         tloMeasurements.Controls.Add(txtAngle, 0, 1)
-        tloMeasurements.Controls.Add(txtBlade, 2, 1)
         tloMeasurements.Controls.Add(labBlade, 2, 0)
         tloMeasurements.Controls.Add(txtRadius, 3, 1)
         tloMeasurements.Controls.Add(labRadius, 3, 0)
@@ -456,12 +414,12 @@ Partial Class FrmMeasurements
         tloMeasurements.Controls.Add(CboxOffsetToHub, 0, 3)
         tloMeasurements.Controls.Add(LblStatus, 0, 4)
         tloMeasurements.Controls.Add(TxtStatus, 0, 5)
-        tloMeasurements.Controls.Add(cmdStartScan, 3, 5)
-        tloMeasurements.Controls.Add(cmdStopScan, 4, 5)
         tloMeasurements.Controls.Add(cmdHome, 6, 5)
         tloMeasurements.Controls.Add(cmdSetTip, 7, 5)
         tloMeasurements.Controls.Add(cmdZero, 8, 5)
         tloMeasurements.Controls.Add(GrpSystem, 9, 0)
+        tloMeasurements.Controls.Add(ComboBladeId, 2, 1)
+        tloMeasurements.Controls.Add(chkMeasurements, 3, 5)
         tloMeasurements.Dock = DockStyle.Fill
         tloMeasurements.Location = New Point(0, 0)
         tloMeasurements.Name = "tloMeasurements"
@@ -1364,6 +1322,36 @@ Partial Class FrmMeasurements
         RadSysMetric.Text = "Metric"
         RadSysMetric.UseVisualStyleBackColor = True
         ' 
+        ' ComboBladeId
+        ' 
+        ComboBladeId.DisplayMember = "BladeId"
+        ComboBladeId.FormattingEnabled = True
+        ComboBladeId.Location = New Point(140, 39)
+        ComboBladeId.Margin = New Padding(2, 1, 2, 1)
+        ComboBladeId.Name = "ComboBladeId"
+        ComboBladeId.Size = New Size(65, 23)
+        ComboBladeId.TabIndex = 32
+        ComboBladeId.ValueMember = "BladeId"
+        ' 
+        ' chkMeasurements
+        ' 
+        chkMeasurements.Appearance = Appearance.Button
+        chkMeasurements.Location = New Point(210, 193)
+        chkMeasurements.Name = "chkMeasurements"
+        chkMeasurements.Size = New Size(63, 23)
+        chkMeasurements.TabIndex = 33
+        chkMeasurements.Text = "Start"
+        chkMeasurements.TextAlign = ContentAlignment.MiddleCenter
+        chkMeasurements.UseVisualStyleBackColor = True
+        ' 
+        ' timerMeasurements
+        ' 
+        ' 
+        ' BladeID
+        ' 
+        BladeID.HeaderText = "Blade"
+        BladeID.Name = "BladeID"
+        ' 
         ' FrmMeasurements
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -1371,13 +1359,12 @@ Partial Class FrmMeasurements
         ClientSize = New Size(1104, 571)
         Controls.Add(tloMeasurements)
         Controls.Add(StatusStrip1)
-        Margin = New Padding(2, 1, 2, 1)
         Name = "FrmMeasurements"
         Text = "Measurements"
+        CType(RadiusMeasurementBindingSource, ComponentModel.ISupportInitialize).EndInit()
         StatusStrip1.ResumeLayout(False)
         StatusStrip1.PerformLayout()
         CType(GridBladebyRadius, ComponentModel.ISupportInitialize).EndInit()
-        CType(RadiusMeasurementBindingSource, ComponentModel.ISupportInitialize).EndInit()
         tloMeasurements.ResumeLayout(False)
         tloMeasurements.PerformLayout()
         gBoxPlotGraph.ResumeLayout(False)
@@ -1394,6 +1381,8 @@ Partial Class FrmMeasurements
         GrpSystem.ResumeLayout(False)
         Tlo.ResumeLayout(False)
         Tlo.PerformLayout()
+        CType(CellMeasurementsBindingSource, ComponentModel.ISupportInitialize).EndInit()
+        CType(ExtremeMeasurementsBindingSource, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -1408,10 +1397,8 @@ Partial Class FrmMeasurements
     Friend WithEvents txtRadiusPercent As TextBox
     Friend WithEvents labWheelPitch As Label
     Friend WithEvents txtWheelPitch As TextBox
-    Friend WithEvents cmdStopScan As Button
     Friend WithEvents cmdSetTip As Button
     Friend WithEvents cmdHome As Button
-    Friend WithEvents cmdStartScan As Button
     Friend WithEvents cmdZero As Button
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents WorkstationLabel As ToolStripStatusLabel
@@ -1421,14 +1408,11 @@ Partial Class FrmMeasurements
     Friend WithEvents ResetDepthToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetRadiusToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StatusLabel As ToolStripStatusLabel
-    Friend WithEvents txtBlade As TextBox
-    Friend WithEvents CountUpdate As Timer
     Friend WithEvents GridBladebyRadius As DataGridView
     Friend WithEvents tloMeasurements As TableLayoutPanel
     Friend WithEvents gBoxPlotGraph As GroupBox
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents tloPlotGraph As TableLayoutPanel
-    Friend WithEvents BladeIdDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents RadiusMeasurementBindingSource As BindingSource
     Friend WithEvents GraphTrack As DataVisualization.Charting.Chart
     Friend WithEvents GrpTrack As GroupBox
@@ -1493,4 +1477,10 @@ Partial Class FrmMeasurements
     Friend WithEvents LblLPDIII6 As Label
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents CellMeasurementsBindingSource As BindingSource
+    Friend WithEvents ExtremeMeasurementsBindingSource As BindingSource
+    Friend WithEvents ComboBladeId As ComboBox
+    Friend WithEvents chkMeasurements As CheckBox
+    Friend WithEvents timerMeasurements As Timer
+    Friend WithEvents BladeID As DataGridViewTextBoxColumn
 End Class

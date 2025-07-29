@@ -6,9 +6,9 @@ Namespace Models
     Partial Public Class Job
         Public Property Id As Integer?
 
-        Public Property VesselId As Integer
+        Public Property VesselId As Integer?
 
-        Public Property JobNumber As Integer
+        Public Property JobNumber As Integer?
 
         Public Property StartDate As Date?
 
@@ -32,11 +32,17 @@ Namespace Models
 
         Public Property Blades As Short?
 
+        Public Overridable Property BladesNavigation As Blade
+
         Public Overridable Property InspectedByNavigation As Employee
 
         Public Overridable Property JobDetails As ICollection(Of JobDetail) = New List(Of JobDetail)()
 
         Public Overridable Property Manufacturer As Manufacturer
+
+        Public Overridable Property MaterialNavigation As Material
+
+        Public Overridable Property StyleNavigation As Style
 
         Public Overridable Property Vessel As Vessel
     End Class

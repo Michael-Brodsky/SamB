@@ -19,8 +19,7 @@
           "Microsoft.EntityFrameworkCore.Design": "8.0.6",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.6",
           "System.Data.Odbc": "8.0.1",
-          "System.Data.OleDb": "8.0.1",
-          "WinForms.DataVisualization": "1.10.0"
+          "System.Data.OleDb": "8.0.1"
         },
         "runtime": {
           "Hale-MRI.dll": {}
@@ -823,18 +822,6 @@
         }
       },
       "System.Threading.Channels/6.0.0": {},
-      "WinForms.DataVisualization/1.10.0": {
-        "runtime": {
-          "lib/net6.0-windows7.0/WinForms.DataVisualization.Utilities.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.10.0.0"
-          },
-          "lib/net6.0-windows7.0/WinForms.DataVisualization.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.10.0.0"
-          }
-        }
-      },
       "LibDatabase/1.0.0": {
         "dependencies": {
           "EntityFrameworkCore.Jet": "8.0.0",
@@ -847,7 +834,7 @@
         },
         "runtime": {
           "LibDatabase.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -855,16 +842,8 @@
       "LibEncoder/1.0.0": {
         "runtime": {
           "LibEncoder.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "USB4Wrapper/2.0.0.6": {
-        "runtime": {
-          "USB4Wrapper.dll": {
-            "assemblyVersion": "2.0.0.6",
-            "fileVersion": "2.0.0.8"
           }
         }
       }
@@ -1240,13 +1219,6 @@
       "path": "system.threading.channels/6.0.0",
       "hashPath": "system.threading.channels.6.0.0.nupkg.sha512"
     },
-    "WinForms.DataVisualization/1.10.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-QKFQUf6xnsseiRsWfIeKvbWRJWvOKOvkoec/pWxEjwYrr4Vix4xmAWmvTpJGxoeWRXOzV7Pprm5SCFqzXzBA4g==",
-      "path": "winforms.datavisualization/1.10.0",
-      "hashPath": "winforms.datavisualization.1.10.0.nupkg.sha512"
-    },
     "LibDatabase/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -1254,11 +1226,6 @@
     },
     "LibEncoder/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "USB4Wrapper/2.0.0.6": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

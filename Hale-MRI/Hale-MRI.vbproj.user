@@ -4,6 +4,9 @@
     <Compile Update="FrmCustomers.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FrmDatabaseForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FrmHaleMRI.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -16,11 +19,20 @@
     <Compile Update="FrmJobs.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FrmManufacturers.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FrmMeasurements.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FrmVessels.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="RecordNavigationBar.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="WorkstationStatusStrip.vb">
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

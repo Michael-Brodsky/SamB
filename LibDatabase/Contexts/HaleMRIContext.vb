@@ -58,13 +58,17 @@ Namespace Contexts
         Public Overridable Property VesselServiceTypes As DbSet(Of VesselServiceType)
 
         Public Overridable Property Workstations As DbSet(Of Workstation)
+        'Public Shared Function QryScanDataImport(ByVal filespec As String) As Integer
+        '    Throw New NotSupportedException()
+        'End Function
 
         Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
             'TODO /!\ To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-            optionsBuilder.UseJet("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\82002\source\repos\Hale-MRI\Hale-MRI\LibDatabase\HaleMRI.accdb")
+            optionsBuilder.UseJet("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Hale MRI 4\HaleMRI.accdb")
         End Sub
 
         Protected Overrides Sub OnModelCreating(modelBuilder As ModelBuilder)
+            'modelBuilder.HasDbFunction(GetType(HaleMRIContext).GetMethod(NameOf(QryScanDataImport), New Type() {GetType(String)})).HasName("imexImScanDataContext").HasParameter("filespec")
             modelBuilder.Entity(Of Blade)(
                 Sub(entity)
                     entity.HasKey(Function(e) e.BladeCount).HasName("PrimaryKey")
@@ -130,6 +134,8 @@ Namespace Contexts
                 Sub(entity)
                     entity.HasKey(Function(e) e.Id).HasName("PrimaryKey")
 
+                    entity.HasIndex(Function(e) e.CustomerName, "Customer Name")
+
                     entity.Property(Function(e) e.Id).
                         HasColumnType("counter").
                         HasColumnName("ID")
@@ -162,6 +168,8 @@ Namespace Contexts
             modelBuilder.Entity(Of Employee)(
                 Sub(entity)
                     entity.HasKey(Function(e) e.Id).HasName("PrimaryKey")
+
+                    entity.HasIndex(Function(e) e.EmployeeName, "Employee Name")
 
                     entity.HasIndex(Function(e) e.Id, "ID")
 
@@ -246,6 +254,10 @@ Namespace Contexts
                     entity.Property(Function(e) e.Style).HasMaxLength(255)
                     entity.Property(Function(e) e.VesselId).HasColumnName("Vessel ID")
 
+                    entity.HasOne(Function(d) d.BladesNavigation).WithMany(Function(p) p.Jobs).
+                        HasForeignKey(Function(d) d.Blades).
+                        HasConstraintName("~BladesJobs")
+
                     entity.HasOne(Function(d) d.InspectedByNavigation).WithMany(Function(p) p.Jobs).
                         HasForeignKey(Function(d) d.InspectedBy).
                         HasConstraintName("EmployeesJobs")
@@ -253,6 +265,14 @@ Namespace Contexts
                     entity.HasOne(Function(d) d.Manufacturer).WithMany(Function(p) p.Jobs).
                         HasForeignKey(Function(d) d.ManufacturerId).
                         HasConstraintName("ManufacturersJobs")
+
+                    entity.HasOne(Function(d) d.MaterialNavigation).WithMany(Function(p) p.Jobs).
+                        HasForeignKey(Function(d) d.Material).
+                        HasConstraintName("~MaterialsJobs")
+
+                    entity.HasOne(Function(d) d.StyleNavigation).WithMany(Function(p) p.Jobs).
+                        HasForeignKey(Function(d) d.Style).
+                        HasConstraintName("~StylesJobs")
 
                     entity.HasOne(Function(d) d.Vessel).WithMany(Function(p) p.Jobs).
                         HasForeignKey(Function(d) d.VesselId).
@@ -278,7 +298,6 @@ Namespace Contexts
                         HasColumnType("counter").
                         HasColumnName("ID")
                     entity.Property(Function(e) e.Bore).HasMaxLength(9)
-                    entity.Property(Function(e) e.[Class]).HasMaxLength(4)
                     entity.Property(Function(e) e.Dar).HasColumnName("DAR")
                     entity.Property(Function(e) e.Description).HasMaxLength(16)
                     entity.Property(Function(e) e.DesiredPitch).HasColumnName("Desired Pitch")
@@ -292,11 +311,10 @@ Namespace Contexts
                     entity.Property(Function(e) e.Rotation).HasMaxLength(1)
                     entity.Property(Function(e) e.StartDate).HasColumnName("Start Date")
                     entity.Property(Function(e) e.TeExclusion).HasColumnName("TE Exclusion")
+                    entity.Property(Function(e) e.ToleranceClass).
+                        HasMaxLength(4).
+                        HasColumnName("Tolerance Class")
                     entity.Property(Function(e) e.WheelPitch).HasColumnName("Wheel Pitch")
-
-                    entity.HasOne(Function(d) d.ClassNavigation).WithMany(Function(p) p.JobDetails).
-                        HasForeignKey(Function(d) d.Class).
-                        HasConstraintName("~ClassesPropellers")
 
                     entity.HasOne(Function(d) d.CupNavigation).WithMany(Function(p) p.JobDetails).
                         HasForeignKey(Function(d) d.Cup).
@@ -321,6 +339,10 @@ Namespace Contexts
                     entity.HasOne(Function(d) d.TeExclusionNavigation).WithMany(Function(p) p.JobDetailTeExclusionNavigations).
                         HasForeignKey(Function(d) d.TeExclusion).
                         HasConstraintName("~ExclusionsPropellers1")
+
+                    entity.HasOne(Function(d) d.ToleranceClassNavigation).WithMany(Function(p) p.JobDetails).
+                        HasForeignKey(Function(d) d.ToleranceClass).
+                        HasConstraintName("~ClassesPropellers")
                 End Sub)
 
             modelBuilder.Entity(Of Manufacturer)(
@@ -328,6 +350,8 @@ Namespace Contexts
                     entity.HasKey(Function(e) e.Id).HasName("PrimaryKey")
 
                     entity.HasIndex(Function(e) e.Id, "ID")
+
+                    entity.HasIndex(Function(e) e.ManufacturerName, "Manufacturer Name")
 
                     entity.HasIndex(Function(e) e.PostalCode, "Postal Code")
 
@@ -516,6 +540,8 @@ Namespace Contexts
                     entity.HasIndex(Function(e) e.CustomerId, "Customer ID")
 
                     entity.HasIndex(Function(e) e.Id, "ID")
+
+                    entity.HasIndex(Function(e) e.VesselName, "Vessel Name")
 
                     entity.Property(Function(e) e.Id).
                         HasColumnType("counter").

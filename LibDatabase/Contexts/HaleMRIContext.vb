@@ -53,14 +53,13 @@ Namespace Contexts
 
         Public Overridable Property Tolerances As DbSet(Of Tolerance)
 
+        Public Overridable Property UsysApplicationLogs As DbSet(Of UsysApplicationLog)
+
         Public Overridable Property Vessels As DbSet(Of Vessel)
 
         Public Overridable Property VesselServiceTypes As DbSet(Of VesselServiceType)
 
         Public Overridable Property Workstations As DbSet(Of Workstation)
-        'Public Shared Function QryScanDataImport(ByVal filespec As String) As Integer
-        '    Throw New NotSupportedException()
-        'End Function
 
         Protected Overrides Sub OnConfiguring(optionsBuilder As DbContextOptionsBuilder)
             'TODO /!\ To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -68,7 +67,6 @@ Namespace Contexts
         End Sub
 
         Protected Overrides Sub OnModelCreating(modelBuilder As ModelBuilder)
-            'modelBuilder.HasDbFunction(GetType(HaleMRIContext).GetMethod(NameOf(QryScanDataImport), New Type() {GetType(String)})).HasName("imexImScanDataContext").HasParameter("filespec")
             modelBuilder.Entity(Of Blade)(
                 Sub(entity)
                     entity.HasKey(Function(e) e.BladeCount).HasName("PrimaryKey")
@@ -180,6 +178,9 @@ Namespace Contexts
                         IsRequired().
                         HasMaxLength(64).
                         HasColumnName("Employee Name")
+                    entity.Property(Function(e) e.Password).
+                        IsRequired().
+                        HasMaxLength(32)
                 End Sub)
 
             modelBuilder.Entity(Of Exclusion)(
@@ -234,6 +235,7 @@ Namespace Contexts
                         HasColumnType("counter").
                         HasColumnName("ID")
                     entity.Property(Function(e) e.Description).HasMaxLength(80)
+                    entity.Property(Function(e) e.Diameter).HasDefaultValue(0.0)
                     entity.Property(Function(e) e.InspectedBy).HasColumnName("Inspected By")
                     entity.Property(Function(e) e.JobNumber).HasColumnName("Job Number")
                     entity.Property(Function(e) e.ManufacturerId).HasColumnName("Manufacturer ID")
@@ -244,6 +246,7 @@ Namespace Contexts
                     entity.Property(Function(e) e.PartNumber).
                         HasMaxLength(16).
                         HasColumnName("Part Number")
+                    entity.Property(Function(e) e.Rotation).HasMaxLength(255)
                     entity.Property(Function(e) e.SerialNumber).
                         HasMaxLength(32).
                         HasColumnName("Serial Number")
@@ -404,6 +407,8 @@ Namespace Contexts
 
                     entity.HasIndex(Function(e) e.ManufacturerId, "Manufacturer ID")
 
+                    entity.HasIndex(Function(e) New With {e.ManufacturerId, e.PartNumber}, "Manufacturer Part Number").IsUnique()
+
                     entity.Property(Function(e) e.Id).
                         HasColumnType("counter").
                         HasColumnName("ID")
@@ -411,10 +416,12 @@ Namespace Contexts
                     entity.Property(Function(e) e.BladeWidth).HasColumnName("Blade Width")
                     entity.Property(Function(e) e.Description).HasMaxLength(64)
                     entity.Property(Function(e) e.ManufacturerId).HasColumnName("Manufacturer ID")
+                    entity.Property(Function(e) e.Material).HasMaxLength(16)
                     entity.Property(Function(e) e.PartNumber).
                         HasMaxLength(32).
                         HasColumnName("Part Number")
-                    entity.Property(Function(e) e.RotationlInertia).HasColumnName("Rotationl Inertia")
+                    entity.Property(Function(e) e.Rotation).HasMaxLength(1)
+                    entity.Property(Function(e) e.RotationalInertia).HasColumnName("Rotational Inertia")
                     entity.Property(Function(e) e.Style).HasMaxLength(16)
 
                     entity.HasOne(Function(d) d.BladesNavigation).WithMany(Function(p) p.Propellers).
@@ -425,6 +432,14 @@ Namespace Contexts
                         HasForeignKey(Function(d) d.ManufacturerId).
                         OnDelete(DeleteBehavior.ClientSetNull).
                         HasConstraintName("ManufacturersProducts")
+
+                    entity.HasOne(Function(d) d.MaterialNavigation).WithMany(Function(p) p.Propellers).
+                        HasForeignKey(Function(d) d.Material).
+                        HasConstraintName("~MaterialsPropellers")
+
+                    entity.HasOne(Function(d) d.RotationNavigation).WithMany(Function(p) p.Propellers).
+                        HasForeignKey(Function(d) d.Rotation).
+                        HasConstraintName("~RotationsPropellers1")
 
                     entity.HasOne(Function(d) d.StyleNavigation).WithMany(Function(p) p.Propellers).
                         HasForeignKey(Function(d) d.Style).
@@ -531,6 +546,27 @@ Namespace Contexts
                     entity.Property(Function(e) e.ToleranceClass).
                         HasMaxLength(4).
                         HasColumnName("Tolerance Class")
+                End Sub)
+
+            modelBuilder.Entity(Of UsysApplicationLog)(
+                Sub(entity)
+                    entity.HasKey(Function(e) e.Id).HasName("PrimaryKey")
+
+                    entity.ToTable("USysApplicationLog")
+
+                    entity.Property(Function(e) e.Id).
+                        HasColumnType("counter").
+                        HasColumnName("ID")
+                    entity.Property(Function(e) e.Category).HasMaxLength(255)
+                    entity.Property(Function(e) e.Context).HasMaxLength(255)
+                    entity.Property(Function(e) e.DataMacroInstanceId).
+                        HasMaxLength(255).
+                        HasColumnName("Data Macro Instance ID")
+                    entity.Property(Function(e) e.ErrorNumber).HasColumnName("Error Number")
+                    entity.Property(Function(e) e.ObjectType).
+                        HasMaxLength(255).
+                        HasColumnName("Object Type")
+                    entity.Property(Function(e) e.SourceObject).HasMaxLength(255)
                 End Sub)
 
             modelBuilder.Entity(Of Vessel)(

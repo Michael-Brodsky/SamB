@@ -4,13 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Hale_MRI</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>Hale_MRI.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <Platforms>AnyCPU;x64</Platforms>
+    <ImportedNamespaces>LibDatabase=False,LibDatabase.Contexts=False,LibDatabase.Models=False,System.Data=False,System.Drawing=False,System.Windows.Forms=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,Hale-MRI=True</ImportedNamespaces>
   </PropertyGroup>
 
   <ItemGroup>
+    <Import Include="LibDatabase" />
+    <Import Include="LibDatabase.Contexts" />
+    <Import Include="LibDatabase.Models" />
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />

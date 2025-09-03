@@ -26,12 +26,14 @@ Partial Class FrmMeasurements
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
         Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New DataVisualization.Charting.ChartArea()
         Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
         Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New DataVisualization.Charting.ChartArea()
         Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
+        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New DataVisualization.Charting.Series()
         labBlade = New Label()
         txtAngle = New TextBox()
         labAngle = New Label()
@@ -56,10 +58,11 @@ Partial Class FrmMeasurements
         ResetRadiusToolStripMenuItem = New ToolStripMenuItem()
         StatusLabel = New ToolStripStatusLabel()
         GridBladebyRadius = New DataGridView()
+        BladeID = New DataGridViewTextBoxColumn()
         tloMeasurements = New TableLayoutPanel()
         gBoxPlotGraph = New GroupBox()
         tloPlotGraph = New TableLayoutPanel()
-        Chart1 = New DataVisualization.Charting.Chart()
+        PlotGraph = New DataVisualization.Charting.Chart()
         GrpTrack = New GroupBox()
         tloTrack = New TableLayoutPanel()
         GraphTrack = New DataVisualization.Charting.Chart()
@@ -123,19 +126,18 @@ Partial Class FrmMeasurements
         Tlo = New TableLayoutPanel()
         RadSysImperical = New RadioButton()
         RadSysMetric = New RadioButton()
-        ComboBladeId = New ComboBox()
         chkMeasurements = New CheckBox()
+        txtBlade = New TextBox()
         CellMeasurementsBindingSource = New BindingSource(components)
         ExtremeMeasurementsBindingSource = New BindingSource(components)
         timerMeasurements = New Timer(components)
-        BladeID = New DataGridViewTextBoxColumn()
         CType(RadiusMeasurementBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
         CType(GridBladebyRadius, ComponentModel.ISupportInitialize).BeginInit()
         tloMeasurements.SuspendLayout()
         gBoxPlotGraph.SuspendLayout()
         tloPlotGraph.SuspendLayout()
-        CType(Chart1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(PlotGraph, ComponentModel.ISupportInitialize).BeginInit()
         GrpTrack.SuspendLayout()
         tloTrack.SuspendLayout()
         CType(GraphTrack, ComponentModel.ISupportInitialize).BeginInit()
@@ -224,7 +226,7 @@ Partial Class FrmMeasurements
         ' 
         ' RadiusMeasurementBindingSource
         ' 
-        RadiusMeasurementBindingSource.DataSource = GetType(LibDatabase.Models.RadiusMeasurement)
+        RadiusMeasurementBindingSource.DataSource = GetType(RadiusMeasurement)
         ' 
         ' labRadiusPercent
         ' 
@@ -376,6 +378,11 @@ Partial Class FrmMeasurements
         GridBladebyRadius.Size = New Size(621, 152)
         GridBladebyRadius.TabIndex = 21
         ' 
+        ' BladeID
+        ' 
+        BladeID.HeaderText = "Blade"
+        BladeID.Name = "BladeID"
+        ' 
         ' tloMeasurements
         ' 
         tloMeasurements.ColumnCount = 16
@@ -418,8 +425,8 @@ Partial Class FrmMeasurements
         tloMeasurements.Controls.Add(cmdSetTip, 7, 5)
         tloMeasurements.Controls.Add(cmdZero, 8, 5)
         tloMeasurements.Controls.Add(GrpSystem, 9, 0)
-        tloMeasurements.Controls.Add(ComboBladeId, 2, 1)
         tloMeasurements.Controls.Add(chkMeasurements, 3, 5)
+        tloMeasurements.Controls.Add(txtBlade, 2, 1)
         tloMeasurements.Dock = DockStyle.Fill
         tloMeasurements.Location = New Point(0, 0)
         tloMeasurements.Name = "tloMeasurements"
@@ -460,7 +467,7 @@ Partial Class FrmMeasurements
         tloPlotGraph.ColumnCount = 2
         tloPlotGraph.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 30F))
         tloPlotGraph.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 70F))
-        tloPlotGraph.Controls.Add(Chart1, 1, 0)
+        tloPlotGraph.Controls.Add(PlotGraph, 1, 0)
         tloPlotGraph.Dock = DockStyle.Fill
         tloPlotGraph.Location = New Point(3, 19)
         tloPlotGraph.Margin = New Padding(0)
@@ -471,33 +478,56 @@ Partial Class FrmMeasurements
         tloPlotGraph.Size = New Size(339, 206)
         tloPlotGraph.TabIndex = 0
         ' 
-        ' Chart1
+        ' PlotGraph
         ' 
+        ChartArea1.AxisX.IsStartedFromZero = False
         ChartArea1.AxisX.LabelStyle.Enabled = False
         ChartArea1.AxisX.MajorGrid.Enabled = False
+        ChartArea1.AxisX.MajorTickMark.Enabled = False
         ChartArea1.AxisX.Maximum = 1R
+        ChartArea1.AxisX.MaximumAutoSize = 100F
         ChartArea1.AxisX.Minimum = -1R
+        ChartArea1.AxisX2.Enabled = DataVisualization.Charting.AxisEnabled.False
         ChartArea1.AxisY.Interval = 10R
+        ChartArea1.AxisY.IsStartedFromZero = False
         ChartArea1.AxisY.LabelStyle.Enabled = False
         ChartArea1.AxisY.MajorGrid.Enabled = False
         ChartArea1.AxisY.Maximum = 1R
+        ChartArea1.AxisY.MaximumAutoSize = 100F
         ChartArea1.AxisY.Minimum = -1R
+        ChartArea1.AxisY2.Enabled = DataVisualization.Charting.AxisEnabled.False
         ChartArea1.Name = "ChartArea1"
-        Chart1.ChartAreas.Add(ChartArea1)
-        Chart1.Dock = DockStyle.Fill
+        PlotGraph.ChartAreas.Add(ChartArea1)
+        PlotGraph.Dock = DockStyle.Fill
         Legend1.Enabled = False
         Legend1.Name = "Legend1"
-        Chart1.Legends.Add(Legend1)
-        Chart1.Location = New Point(104, 3)
-        Chart1.Name = "Chart1"
+        PlotGraph.Legends.Add(Legend1)
+        PlotGraph.Location = New Point(104, 3)
+        PlotGraph.Name = "PlotGraph"
         Series1.ChartArea = "ChartArea1"
         Series1.ChartType = DataVisualization.Charting.SeriesChartType.Point
+        Series1.EmptyPointStyle.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
         Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Chart1.Series.Add(Series1)
-        Chart1.Size = New Size(232, 169)
-        Chart1.TabIndex = 23
-        Chart1.Text = "Chart1"
+        Series1.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+        Series1.Name = "GoodPitch"
+        Series2.ChartArea = "ChartArea1"
+        Series2.ChartType = DataVisualization.Charting.SeriesChartType.Point
+        Series2.EmptyPointStyle.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+        Series2.Legend = "Legend1"
+        Series2.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+        Series2.Name = "LowPitch"
+        Series3.ChartArea = "ChartArea1"
+        Series3.ChartType = DataVisualization.Charting.SeriesChartType.Point
+        Series3.EmptyPointStyle.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+        Series3.Legend = "Legend1"
+        Series3.MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+        Series3.Name = "HighPitch"
+        PlotGraph.Series.Add(Series1)
+        PlotGraph.Series.Add(Series2)
+        PlotGraph.Series.Add(Series3)
+        PlotGraph.Size = New Size(232, 169)
+        PlotGraph.TabIndex = 23
+        PlotGraph.Text = "Chart1"
         ' 
         ' GrpTrack
         ' 
@@ -555,10 +585,10 @@ Partial Class FrmMeasurements
         GraphTrack.Location = New Point(3, 3)
         GraphTrack.Name = "GraphTrack"
         tloTrack.SetRowSpan(GraphTrack, 6)
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        GraphTrack.Series.Add(Series2)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        GraphTrack.Series.Add(Series4)
         GraphTrack.Size = New Size(226, 141)
         GraphTrack.TabIndex = 23
         GraphTrack.Text = "Chart2"
@@ -573,10 +603,10 @@ Partial Class FrmMeasurements
         GrpRefBlades.Location = New Point(389, 3)
         GrpRefBlades.Name = "GrpRefBlades"
         tloTrack.SetRowSpan(GrpRefBlades, 6)
-        Series3.ChartArea = "ChartArea1"
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        GrpRefBlades.Series.Add(Series3)
+        Series5.ChartArea = "ChartArea1"
+        Series5.Legend = "Legend1"
+        Series5.Name = "Series1"
+        GrpRefBlades.Series.Add(Series5)
         GrpRefBlades.Size = New Size(227, 141)
         GrpRefBlades.TabIndex = 24
         GrpRefBlades.Text = "Chart2"
@@ -1322,17 +1352,6 @@ Partial Class FrmMeasurements
         RadSysMetric.Text = "Metric"
         RadSysMetric.UseVisualStyleBackColor = True
         ' 
-        ' ComboBladeId
-        ' 
-        ComboBladeId.DisplayMember = "BladeId"
-        ComboBladeId.FormattingEnabled = True
-        ComboBladeId.Location = New Point(140, 39)
-        ComboBladeId.Margin = New Padding(2, 1, 2, 1)
-        ComboBladeId.Name = "ComboBladeId"
-        ComboBladeId.Size = New Size(65, 23)
-        ComboBladeId.TabIndex = 32
-        ComboBladeId.ValueMember = "BladeId"
-        ' 
         ' chkMeasurements
         ' 
         chkMeasurements.Appearance = Appearance.Button
@@ -1344,13 +1363,17 @@ Partial Class FrmMeasurements
         chkMeasurements.TextAlign = ContentAlignment.MiddleCenter
         chkMeasurements.UseVisualStyleBackColor = True
         ' 
+        ' txtBlade
+        ' 
+        txtBlade.Dock = DockStyle.Top
+        txtBlade.Location = New Point(140, 39)
+        txtBlade.Margin = New Padding(2, 1, 0, 1)
+        txtBlade.Name = "txtBlade"
+        txtBlade.Size = New Size(67, 23)
+        txtBlade.TabIndex = 34
+        ' 
         ' timerMeasurements
         ' 
-        ' 
-        ' BladeID
-        ' 
-        BladeID.HeaderText = "Blade"
-        BladeID.Name = "BladeID"
         ' 
         ' FrmMeasurements
         ' 
@@ -1369,7 +1392,7 @@ Partial Class FrmMeasurements
         tloMeasurements.PerformLayout()
         gBoxPlotGraph.ResumeLayout(False)
         tloPlotGraph.ResumeLayout(False)
-        CType(Chart1, ComponentModel.ISupportInitialize).EndInit()
+        CType(PlotGraph, ComponentModel.ISupportInitialize).EndInit()
         GrpTrack.ResumeLayout(False)
         tloTrack.ResumeLayout(False)
         tloTrack.PerformLayout()
@@ -1411,7 +1434,6 @@ Partial Class FrmMeasurements
     Friend WithEvents GridBladebyRadius As DataGridView
     Friend WithEvents tloMeasurements As TableLayoutPanel
     Friend WithEvents gBoxPlotGraph As GroupBox
-    Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents tloPlotGraph As TableLayoutPanel
     Friend WithEvents RadiusMeasurementBindingSource As BindingSource
     Friend WithEvents GraphTrack As DataVisualization.Charting.Chart
@@ -1479,8 +1501,9 @@ Partial Class FrmMeasurements
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents CellMeasurementsBindingSource As BindingSource
     Friend WithEvents ExtremeMeasurementsBindingSource As BindingSource
-    Friend WithEvents ComboBladeId As ComboBox
     Friend WithEvents chkMeasurements As CheckBox
     Friend WithEvents timerMeasurements As Timer
     Friend WithEvents BladeID As DataGridViewTextBoxColumn
+    Friend WithEvents txtBlade As TextBox
+    Friend WithEvents PlotGraph As DataVisualization.Charting.Chart
 End Class

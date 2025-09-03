@@ -33,5 +33,11 @@ Module MRIMath
 
         Return chordlength
     End Function
-
+    Public Function GetBladeNumber(Angle As Double, Blades As Integer) As Integer
+        Dim bladenumber As Integer
+        If Blades = 0 Or Angle < 0 Then
+            Return 0
+        End If
+        Return bladenumber = Blades - CInt(Math.Ceiling(Angle / (360 / Blades)))
+    End Function
 End Module
